@@ -1,0 +1,138 @@
+"use client";
+import { useState } from "react";
+
+export default function CareerTestPage() {
+  const questions = [
+    { id: 1, text: "Представьте, что вы на выставке. Что вас больше привлекает в экспонатах:", optionA: "цвет, совершенство форм", optionB: "их внутреннее устройство (как и из чего они сделаны)" },
+    { id: 2, text: "Какие черты характера в человеке вам больше всего нравятся:", optionA: "дружелюбие, чуткость, отсутствие корысти", optionB: "мужество, смелость, выносливость" },
+    { id: 3, text: "Служба быта оказывает людям различные услуги. Считаете ли вы необходимым:", optionA: "и впредь развивать эту отрасль, чтобы всесторонне обслуживать людей", optionB: "создавать такую технику, которой можно было бы пользоваться самим в быту" },
+    { id: 4, text: "Какое награждение вас больше бы обрадовало:", optionA: "за общественную деятельность", optionB: "за научное изобретение" },
+    { id: 5, text: "Вы смотрите военный или спортивный парад. Что больше привлекает ваше внимание:", optionA: "слаженность ходьбы, грациозность участников парада", optionB: "внешнее оформление колонн (знамена, одежда и пр.)" },
+    { id: 6, text: "Представьте, что у вас много свободного времени. Чем бы вы охотнее занялись:", optionA: "чем-либо практическим (ручным трудом)", optionB: "общественной работой (на добровольных началах)" },
+    { id: 7, text: "Какую выставку вы бы с большим удовольствием посмотрели:", optionA: "новинок научной аппаратуры (в области физики, химии, биологии)", optionB: "новых продовольственных товаров" },
+    { id: 8, text: "Если бы в школе было бы два кружка, какой бы вы выбрали:", optionA: "музыкальный", optionB: "технический" },
+    { id: 9, text: "Если бы вам предоставили пост директора школы, на что бы вы обратили большее внимание:", optionA: "на сплоченность коллектива", optionB: "на создание необходимых удобств" },
+    { id: 10, text: "Какие журналы вы бы с большим удовольствием читали:", optionA: "литературно-художественные", optionB: "научно-популярные" },
+    { id: 11, text: "Что важнее для человека:", optionA: "создавать себе благополучный, удобный быт", optionB: "жить без некоторых удобств, но иметь возможность пользоваться сокровищницей искусства, создавать искусство" },
+    { id: 12, text: "Для благополучия общества необходимо:", optionA: "техника", optionB: "правосудие" },
+    { id: 13, text: "Какую из двух книг вы бы с большим удовольствием читали:", optionA: "о развитии науки в нашей стране", optionB: "о достижениях спортсменов нашей страны" },
+    { id: 14, text: "В газете две статьи разного содержания. Какая из них вызвала бы у вас большую заинтересованность:", optionA: "о машине нового типа", optionB: "о новой научной теории" },
+    { id: 15, text: "Какая из двух работ вас больше бы привлекла:", optionA: "работа, связанная с постоянным передвижением (агроном, лесничий и т.п.)", optionB: "работа с машинами" },
+    { id: 16, text: "Какая, на ваш взгляд, задача школы важнее:", optionA: "подготовить учащихся к работе с людьми, чтобы они могли помогать другим создавать материальные блага", optionB: "подготовить учащихся к практической деятельности, к умению создавать материальные блага" },
+    { id: 17, text: "Что, на ваш взгляд, следует больше ценить у участников самодеятельности:", optionA: "то, что они несут людям искусство и красоту", optionB: "то, что они выполняют общественно полезную работу" },
+    { id: 18, text: "Какая, на ваш взгляд, область деятельности человека в дальнейшем будет иметь доминирующее значение:", optionA: "физика", optionB: "физическая культура" },
+    { id: 19, text: "Что обществу принесет больше пользы:", optionA: "забота о благосостоянии граждан", optionB: "изучение поведения людей" },
+    { id: 20, text: "Какого характера научную работу вы бы выбрали:", optionA: "работа с книгами в библиотеке", optionB: "работу на свежем воздухе в экспедиции" },
+    { id: 21, text: "Представьте, что вы профессор университета. Чему вы отдали бы предпочтение в свободное от работы время:", optionA: "занятиям по литературе", optionB: "опыты по физике, химии" },
+    { id: 22, text: "Вам представляется возможность совершить путешествия в разные страны. В качестве кого вы охотнее поехали бы:", optionA: "как известный спортсмен на международные соревнования", optionB: "как известный специалист по внешней торговле с целью покупки необходимых товаров для вашей страны" },
+    { id: 23, text: "Какие лекции слушали бы с большим удовольствием:", optionA: "о выдающихся художниках", optionB: "о выдающихся ученых" },
+    { id: 24, text: "Что вас больше привлекает при чтении книг:", optionA: "яркое изображение смелости и яркости героев", optionB: "прекрасный литературный стиль" },
+    { id: 25, text: "Вам предоставляется возможность выбора профессии. Какой из них вы бы отдали предпочтение:", optionA: "работе малоподвижной, но связанной с созданием новой техники", optionB: "физической культуре или другой работе, связанной с движением" },
+    { id: 26, text: "Какими выдающимися учеными вы больше интересуетесь:", optionA: "Поповым и Циолковским", optionB: "Менделеевым и Павловым" },
+    { id: 27, text: "Как вам кажется, на что следовало бы в школе обратить большее внимание:", optionA: "на спорт, так как это нужно для укрепления здоровья", optionB: "на успеваемость учащихся, так как это необходимо для их будущего" },
+    { id: 28, text: "Что бы вас больше заинтересовало в печати:", optionA: "сообщение о состоявшейся художественной выставке", optionB: "известие о прошедшем митинге в защиту прав человека" },
+    { id: 29, text: "Если бы вам представилась возможность занять определенный пост, какой бы вы предпочли:", optionA: "главного инженера завода", optionB: "директора универмага" },
+    { id: 30, text: "Как вы считаете, что важнее:", optionA: "много знать", optionB: "создавать материальные блага" },
+  ];
+
+  const [answers, setAnswers] = useState({});
+  const handleChoice = (qid, option) => setAnswers({ ...answers, [qid]: { option, value: null } });
+  const handleScale = (qid, value) => setAnswers({ ...answers, [qid]: { ...answers[qid], value } });
+
+  const scaleOptions = [
+    { label: "Полностью согласен", value: 3 },
+    { label: "Скорее согласен", value: 2 },
+    { label: "Скорее не согласен", value: 1 },
+    { label: "Совсем не согласен", value: 0 },
+  ];
+
+  const answeredCount = Object.values(answers).filter((a) => a.value !== null).length;
+  const progress = Math.round((answeredCount / questions.length) * 100);
+
+  const categories = {
+    art: ["1A", "5B", "8A", "10A", "11B", "17A", "21A", "23A", "24B", "28A"],
+    technical: ["1B", "3B", "6A", "8B", "12A", "14A", "15B", "25A", "26A", "29B"],
+    people: ["2A", "4A", "6B", "9A", "12B", "16A", "17B", "19B", "23B", "28B"],
+    intellectual: ["4B", "7A", "10B", "13A", "14B", "18A", "20A", "21B", "26B", "30A"],
+    physical: ["2B", "5A", "13B", "15A", "18B", "20B", "22A", "24A", "25B", "27A"],
+    material: ["3A", "7B", "9B", "11A", "16B", "19A", "22B", "27B", "29A", "30B"],
+  };
+
+  const scores = { art: 0, technical: 0, people: 0, intellectual: 0, physical: 0, material: 0 };
+  Object.entries(answers).forEach(([qid, ans]) => {
+    if (!ans.option || ans.value === null) return;
+    const key = qid + ans.option;
+    for (let cat in categories) {
+      if (categories[cat].includes(key)) scores[cat] += ans.value;
+    }
+  });
+
+  const interpretResult = () => {
+    const maxScore = Math.max(...Object.values(scores));
+    const topCategories = Object.keys(scores).filter((k) => scores[k] === maxScore);
+    const names = {
+      art: "Сфера искусства (человек – художественный образ)",
+      technical: "Техническая сфера (человек – техника)",
+      people: "Работа с людьми (человек – человек)",
+      intellectual: "Умственный труд",
+      physical: "Физический труд",
+      material: "Материальные интересы",
+    };
+    return topCategories.length === 1
+      ? `Ведущая сфера ваших интересов: ${names[topCategories[0]]}.`
+      : `У вас выражены несколько сфер: ${topCategories.map((c) => names[c]).join(", ")}.`;
+  };
+
+  return (
+    <div className="min-h-screen bg-white flex flex-col items-center p-6 font-sans">
+      <header className="w-full max-w-4xl text-center mb-12">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Диагностика профессиональных предпочтений</h1>
+        <p className="text-gray-600 text-lg mb-4">Опросник Л.А. Йовайша</p>
+      </header>
+
+      <main className="w-full max-w-4xl">
+        <h2 className="text-2xl font-semibold mb-8 text-gray-800">Вопросы</h2>
+        <div className="space-y-8">
+          {questions.map((q) => (
+            <div key={q.id} className="p-6 border border-gray-200 rounded-2xl shadow-sm bg-gradient-to-br from-gray-50 to-white hover:shadow-md transition">
+              <p className="mb-4 font-medium text-lg">{q.id}. {q.text}</p>
+              <div className="flex gap-4 mb-3">
+                <button onClick={() => handleChoice(q.id, "A")} className={`px-3 py-2 rounded-lg border text-sm ${answers[q.id]?.option === "A" ? "bg-indigo-200 border-indigo-400" : "hover:bg-indigo-50"}`}>а) {q.optionA}</button>
+                <button onClick={() => handleChoice(q.id, "B")} className={`px-3 py-2 rounded-lg border text-sm ${answers[q.id]?.option === "B" ? "bg-indigo-200 border-indigo-400" : "hover:bg-indigo-50"}`}>б) {q.optionB}</button>
+              </div>
+              {answers[q.id]?.option && (
+                <div className="flex flex-wrap gap-2">
+                  {scaleOptions.map((opt) => (
+                    <button key={opt.value} onClick={() => handleScale(q.id, opt.value)} className={`px-3 py-1 rounded border text-xs ${answers[q.id]?.value === opt.value ? "bg-green-200 border-green-400" : "hover:bg-green-50"}`}>{opt.label}</button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-14 w-full">
+          <h3 className="text-lg font-semibold mb-4 text-center text-gray-800">Прогресс заполнения</h3>
+          <div className="w-full bg-gray-200 h-6 rounded-full overflow-hidden">
+            <div className="bg-indigo-400 h-6 text-white text-sm flex items-center justify-center transition-all" style={{ width: `${progress}%` }}>{progress}%</div>
+          </div>
+        </div>
+
+        <div className="mt-10 p-6 bg-gray-50 border border-gray-200 rounded-2xl shadow-inner">
+          <h3 className="text-lg font-semibold mb-4 text-gray-800 text-center">Ваши результаты</h3>
+          <div className="grid grid-cols-2 gap-4 text-center mb-6">
+            <div className="p-3 bg-white rounded-lg shadow"><p className="font-medium">Сфера искусства</p><p className="text-indigo-600 font-bold">{scores.art}</p></div>
+            <div className="p-3 bg-white rounded-lg shadow"><p className="font-medium">Техническая сфера</p><p className="text-indigo-600 font-bold">{scores.technical}</p></div>
+            <div className="p-3 bg-white rounded-lg shadow"><p className="font-medium">Работа с людьми</p><p className="text-indigo-600 font-bold">{scores.people}</p></div>
+            <div className="p-3 bg-white rounded-lg shadow"><p className="font-medium">Умственный труд</p><p className="text-indigo-600 font-bold">{scores.intellectual}</p></div>
+            <div className="p-3 bg-white rounded-lg shadow"><p className="font-medium">Физический труд</p><p className="text-indigo-600 font-bold">{scores.physical}</p></div>
+            <div className="p-3 bg-white rounded-lg shadow"><p className="font-medium">Материальные интересы</p><p className="text-indigo-600 font-bold">{scores.material}</p></div>
+          </div>
+          <div className="text-center text-gray-800 text-lg font-medium">
+            {answeredCount === questions.length ? interpretResult() : "Ответьте на все вопросы, чтобы увидеть интерпретацию"}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
